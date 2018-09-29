@@ -2,8 +2,8 @@ import React from 'react';
 import classes from './BuildControls.css';
 import BuildControl from './BuildControl/BuildControl';
 
-const BuildControls = (props) => {
-  const types = Object.keys({...props.ingredients});
+const BuildControls = ({ingredients, moreHandler, lessHandler}) => {
+  const types = Object.keys({...ingredients});
 
   return ( 
   <div className={classes.BuildControls}>
@@ -12,7 +12,9 @@ const BuildControls = (props) => {
         label={type[0].toUpperCase() + type.slice(1)} 
         type={type} 
         key={type}
-        more={props.moreHandler} />
+        more={moreHandler}
+        less={lessHandler} />
+        
     })}
   </div>
 );
