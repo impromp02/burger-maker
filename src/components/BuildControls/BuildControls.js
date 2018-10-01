@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './BuildControls.css';
 import BuildControl from './BuildControl/BuildControl';
 
-const BuildControls = ({ingredients, moreHandler, lessHandler, disabledInfo, totalPrice, purchasable}) => {
+const BuildControls = ({ingredients, moreHandler, lessHandler, disabledInfo, totalPrice, purchasable, purchased}) => {
   const types = Object.keys({...ingredients});
 
   return ( 
@@ -18,7 +18,10 @@ const BuildControls = ({ingredients, moreHandler, lessHandler, disabledInfo, tot
         disabled={disabledInfo[type]} />
         
     })}
-    <button disabled={!purchasable} className={classes.OrderButton}>Order Now!</button>
+    <button 
+      disabled={!purchasable} 
+      className={classes.OrderButton}
+      onClick={purchased}>Order Now!</button>
   </div>
 );
 }
