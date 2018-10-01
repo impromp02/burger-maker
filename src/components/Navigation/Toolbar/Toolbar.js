@@ -5,7 +5,7 @@ import classes from './Toolbar.css';
 import NavigationItems from '../NavigationItems/NavigationItems';
 import Aux from '../../../hoc/Aux';
 
-const Toolbar = ({mobile}) => {
+const Toolbar = ({mobile, toggleSideDrawer}) => {
   let toolbarItems = null;
   if(mobile === false) {
     toolbarItems = 
@@ -21,9 +21,12 @@ const Toolbar = ({mobile}) => {
   }
   return (
     <header className={classes.Toolbar}>
-      <div>Menu</div>
+      <div onClick={toggleSideDrawer} className={classes.DrawerToggle}>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
       {toolbarItems}
-      
     </header>
   );
     

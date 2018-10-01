@@ -7,7 +7,7 @@ import classes from './Layout.css';
 class Layout extends React.Component {
   state = {
     mobile: window.innerWidth < 500,
-    showSideDrawer: true
+    showSideDrawer: false
   }
 
   resizeHandler = () => {
@@ -17,6 +17,12 @@ class Layout extends React.Component {
 
   sideDrawerCloseHandler = () => {
     this.setState({showSideDrawer: false});
+  }
+
+  sideDrawerToggler = () => {
+    this.setState((prevState) => {
+      return {showSideDrawer: !prevState.showSideDrawer}
+    });
   }
 
   componentDidMount() {
@@ -31,7 +37,7 @@ class Layout extends React.Component {
     return (
       <Aux>
         <SideDrawer show={this.state.showSideDrawer} close={this.sideDrawerCloseHandler}/>
-        <Toolbar mobile={this.state.mobile} />
+        <Toolbar mobile={this.state.mobile} toggleSideDrawer={this.sideDrawerToggler} />
         <main className={classes.Content}>{this.props.children}</main>
       </Aux>
     );
