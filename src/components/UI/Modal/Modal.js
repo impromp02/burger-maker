@@ -6,7 +6,7 @@ import classes from './Modal.css';
 
 const Modal = ({show, children, closeModal}) => (
   <Aux>
-    <Backdrop show={show} closeModal={closeModal} /> 
+    <Backdrop show={show} close={closeModal} /> 
     <div className={classes.Modal}
     style={{
       transform: show ? 'translateY(0)' : 'translateY(-100vh)',
