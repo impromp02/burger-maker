@@ -6,6 +6,7 @@ import BuildControls from '../../components/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Spinner from '../../components/UI/Spinnner/Spinner';
+import withError from '../../handleError/handleError';
 import axios from '../../axios-orders';
 
 const INGREDIENT_PRICE = {
@@ -69,7 +70,7 @@ class BurgerBuilder extends Component {
   continueButtonHandler = () => {
     this.setState({loading: true});
 
-    axios.post('/orders.json', {
+    axios.post('/orders.jso', {
       ingrdients: this.state.ingredients,
       price: this.state.totalPrice,
       customer: {
@@ -113,4 +114,4 @@ class BurgerBuilder extends Component {
   }
 }
 
-export default BurgerBuilder;
+export default withError(BurgerBuilder, axios);
