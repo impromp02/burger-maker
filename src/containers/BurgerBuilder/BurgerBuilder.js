@@ -6,7 +6,7 @@ import BuildControls from '../../components/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Spinner from '../../components/UI/Spinnner/Spinner';
-import withError from '../../handleError/handleError';
+import withError from '../../withError/withError';
 import axios from '../../axios-orders';
 
 const INGREDIENT_PRICE = {
