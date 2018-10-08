@@ -68,18 +68,6 @@ class BurgerBuilder extends Component {
   }
 
   continueButtonHandler = () => {
-    // this.setState({loading: true});
-
-    // axios.post('/orders.jso', {
-    //   ingrdients: this.state.ingredients,
-    //   price: this.state.totalPrice,
-    //   customer: {
-    //     name: 'Vivek',
-    //     address: 'Pune'
-    //   },
-    //   delivery: 'Fastest'
-    // }).then(() => this.setState({loading: false, purchasing: false}))
-    // .catch(err => this.setState({loading: false, purchasing: false}));
     const queryParams = [];
 
     for(let i in this.state.ingredients) {
