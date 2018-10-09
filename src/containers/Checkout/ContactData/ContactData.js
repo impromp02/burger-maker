@@ -22,7 +22,7 @@ class ContactData extends Component {
     this.setState({loading: true});
 
     axios.post('/orders.json', {
-      ingrdients: this.props.ingredients,
+      ingredients: this.props.ingredients,
       price: this.props.totalPrice,
       customer: {
         name: 'Vivek',
@@ -37,7 +37,6 @@ class ContactData extends Component {
   }
 
   render() {
-    console.log(this.props)
     let form = (
       <form action="">
           <input className={classes.Input} type="text" name="name" placeholder="Your Name" />
