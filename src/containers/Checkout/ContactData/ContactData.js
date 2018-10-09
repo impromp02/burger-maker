@@ -42,13 +42,12 @@ class ContactData extends Component {
     event.preventDefault();
     
     this.setState({loading: true});
-    const dataToSend = {
-      name: this.state.orderForm.name.value,
-      email: this.state.orderForm.email.value,
-      address: this.state.orderForm.street.value,
-      delivery: this.state.orderForm.delivery.value,
-      ingredients: this.props.ingredients
+    const dataToSend = {};
+    for (let key in this.state.orderForm) {
+      dataToSend[key] = this.state.orderForm[key].value;
     }
+      dataToSend.ingredients = this.props.ingredients;
+
     console.log(dataToSend);
     axios.post('/orders.json', dataToSend)
     .then(() => {
@@ -79,16 +78,18 @@ class ContactData extends Component {
     if(this.state.loading) {
       formInputs = <Spinner/>;
     } else {
-      formInputs = formInputsArray.map(input => {
-        return <Input change={(event) => this.inputChangeHandler(event, input.id)} key={input.id} attr={input} />
-      });
+      formInputs = <form onSubmit={this.orderHandler}>
+        {formInputsArray.map(input => {
+          return <Input change={(event) => this.inputChangeHandler(event, input.id)} key={input.id} attr={input} />
+        })}
+        <Button btnType="Success" >Order</Button>
+      </form>
     }
 
     return (
       <div className={classes.ContactData}>
         <h3>Enter your contact info</h3>
         {formInputs}
-        <Button btnType="Success" clicked={this.orderHandler}>Order</Button>
       </div>
     );
   }
