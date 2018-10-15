@@ -7,7 +7,6 @@ import classes from './ContactData.css';
 import Spinner from '../../../components/UI/Spinnner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 import withError from '../../../withError/withError';
-import { setOrder } from '../../../store/actions/index';
 
 class ContactData extends Component {
   state = {
@@ -58,7 +57,6 @@ class ContactData extends Component {
     axios.post('/orders.json', dataToSend)
     .then(() => {
       this.setState({loading: false});
-      this.props.addOrder(dataToSend);
       this.props.history.push('/');
     })
     .catch(err => this.setState({loading: false}));
@@ -108,11 +106,4 @@ const mapStateToProps = state => {
     totalPrice: state.burger.totalPrice
   }
 }
-
-const mapDispatchToprops = dispatch => {
-  return {
-    addOrder: (dataToSend) => dispatch(setOrder(dataToSend)),
-
-  };
-}
-export default connect(mapStateToProps, mapDispatchToprops)(withError(ContactData, axios));
+export default connect(mapStateToProps)(withError(ContactData, axios));
