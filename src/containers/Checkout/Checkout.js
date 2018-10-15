@@ -15,6 +15,7 @@ class Checkout extends Component {
   }
 
   render () {
+    //add redirect if ingredients are null to home to add ingredients
     return (
       <div>
         <CheckoutSummary 
@@ -32,7 +33,7 @@ class Checkout extends Component {
 
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients
+    ingredients: state.burger.ingredients
   }
 }
 export default connect(mapStateToProps)(Checkout);

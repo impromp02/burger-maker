@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import axios from '../../../axios-orders';
+import { connect } from 'react-redux';
 
 import Button from '../../../components/UI/Button/Button';
 import classes from './ContactData.css';
 import Spinner from '../../../components/UI/Spinnner/Spinner';
 import Input from '../../../components/UI/Input/Input';
-import { connect } from 'react-redux';
+import withError from '../../../withError/withError';
+import { setOrder } from '../../../store/actions/index';
 
 class ContactData extends Component {
   state = {
@@ -43,16 +45,20 @@ class ContactData extends Component {
     event.preventDefault();
     
     this.setState({loading: true});
-    const dataToSend = {};
+    const formData = {};
     for (let key in this.state.orderForm) {
-      dataToSend[key] = this.state.orderForm[key].value;
+      formData[key] = this.state.orderForm[key].value;
     }
-      dataToSend.ingredients = this.props.ingredients;
-      dataToSend.totalPrice = this.props.totalPrice;
+    const dataToSend = {
+      formData,
+      ingredients: this.props.ingredients,
+      totalPrice: this.props.totalPrice
+    };
 
     axios.post('/orders.json', dataToSend)
     .then(() => {
-      this.setState({loading: false})
+      this.setState({loading: false});
+      this.props.addOrder(dataToSend);
       this.props.history.push('/');
     })
     .catch(err => this.setState({loading: false}));
@@ -98,8 +104,15 @@ class ContactData extends Component {
 
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients,
-    totalPrice: state.totalPrice
+    ingredients: state.burger.ingredients,
+    totalPrice: state.burger.totalPrice
   }
 }
-export default connect(mapStateToProps)(ContactData);
+
+const mapDispatchToprops = dispatch => {
+  return {
+    addOrder: (dataToSend) => dispatch(setOrder(dataToSend)),
+
+  };
+}
+export default connect(mapStateToProps, mapDispatchToprops)(withError(ContactData, axios));

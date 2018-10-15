@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Order.css';
 
-const Order = ({ingredients}) => {
+const Order = ({ingredients, formData, totalPrice}) => {
   const ingredientsArr = [];
   for(let ingredient in ingredients) {
     ingredientsArr.push({
@@ -20,7 +20,10 @@ const Order = ({ingredients}) => {
 
   return (
     <div className={classes.Order}>
+      <p><strong>Name: </strong>{formData.name}</p>
+      <p><strong>Address: </strong>{formData.street}</p>
       <p>Ingredients: {ingredientOutput}</p>
+      <p>Total: {totalPrice}</p>
     </div>   
   );
 }

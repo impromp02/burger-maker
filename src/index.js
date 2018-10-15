@@ -3,16 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import reducer from './store/reducer';
+import configureStore from './store/store';
 import registerServiceWorker from './registerServiceWorker';
 
-const store = createStore(reducer);
+const store = configureStore();
 
 ReactDOM.render(<Provider store={store}><BrowserRouter><App /></BrowserRouter></Provider>, document.getElementById('root'));
 registerServiceWorker();
-
-if(module.hot) {
-  module.hot.accept();
-}
