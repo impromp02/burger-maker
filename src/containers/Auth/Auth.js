@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Spinner from '../../components/UI/Spinnner/Spinner';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
+import classes from './Auth.css';
 
 class Auth extends Component {
   state = {
@@ -21,15 +22,14 @@ class Auth extends Component {
   };
 
   inputChangeHandler = (event, id) => {
-    const newInputValue = {
+    const newAuthInputs = {
+      ...this.state.authInputs,
+      [id]: {
         ...this.state.authInputs[id],
         value: event.target.value
+      }
     };
-    const newAuthInpts = {
-      ...this.state.authInputs,
-      [id]: newInputValue
-    };
-    this.setState({authInputs: newAuthInpts});
+    this.setState({authInputs: newAuthInputs});
   }
 
   formSubmitHandler = () => {
@@ -60,7 +60,7 @@ class Auth extends Component {
     }
 
     return (
-      <div style={{width: '60%', margin: 'auto'}}>
+      <div className={classes.Auth}>
         {formInputs}
       </div>
     );
