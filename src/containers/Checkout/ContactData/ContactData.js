@@ -48,8 +48,9 @@ class ContactData extends Component {
     for (let key in this.state.orderForm) {
       formData[key] = this.state.orderForm[key].value;
     }
+    
     const dataToSend = {
-      formData,
+      formData: {...formData},
       ingredients: this.props.ingredients,
       totalPrice: this.props.totalPrice
     };

@@ -6,12 +6,6 @@ const initalState = {
 
 const reducer = (state = initalState, action) => {
   switch (action.type) {
-    case actionTypes.SET_ORDERS:
-    return {
-      ...state,
-      orders: state.orders.concat(action.payload)
-    };
-
     case actionTypes.GET_ORDERS: 
     return {
       ...state,

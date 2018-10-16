@@ -5,12 +5,17 @@ import { getOrdersAsync } from '../../store/actions/index';
 import Spinner from '../../components/UI/Spinnner/Spinner';
 
 class Orders extends Component {
+  constructor(props) {
+    super(props);
+    this.props.getAllOrders();
+  } 
   state = {
     loading: true
   };
 
   componentDidMount() {
-    this.props.getAllOrders();
+    //this.props.getAllOrders();
+
     this.setState({loading: false});
   }
 

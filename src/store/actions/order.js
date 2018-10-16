@@ -1,13 +1,6 @@
 import * as actionTypes from './actionsTypes';
 import axios from '../../axios-orders';
 
-export const setOrder = (dataToSend) => {
-  return {
-    type: actionTypes.SET_ORDERS,
-    payload: dataToSend
-  };
-};
-
 const getOrders = (orders) => {
   return {
     type: actionTypes.GET_ORDERS,

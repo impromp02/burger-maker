@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import { connect } from 'react-redux';
 import Spinner from '../../components/UI/Spinnner/Spinner';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
+import { saveToken as saveTokenAction } from '../../store/actions/index';
 import classes from './Auth.css';
 
 class Auth extends Component {
@@ -18,7 +21,8 @@ class Auth extends Component {
         value: ''
       }
     },
-    loading: false
+    loading: false,
+    error: false
   };
 
   inputChangeHandler = (event, id) => {
@@ -30,11 +34,53 @@ class Auth extends Component {
       }
     };
     this.setState({authInputs: newAuthInputs});
+  };
+
+  authData() {
+    this.setState({loading: true});
+    return {
+      email: this.state.authInputs.email.value,
+      password: this.state.authInputs.password.value,
+      returnSecureToken: true
+    };
   }
 
-  formSubmitHandler = () => {
+  loginHandler() {
+    console.log('logging');
     this.setState({loading: true});
+    const authData = this.authData();
+    axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyBQIRKY7hdRkUHLEbfpK2AAn0K2efiN3YM', authData)
+    .then(res => {
+      this.setState({loading: false});
+      this.props.saveToken(res.data.idToken);
+      this.props.history.push('/');
+    }).catch(error => {
+      this.setState({loading: false, error: true});
+      console.log('login fail', error.response.data.error.message);      
+    });
   }
+
+  signUpHandler() {
+    this.setState({loading: true});
+    console.log('signing');
+    const authData = this.authData();
+    axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBQIRKY7hdRkUHLEbfpK2AAn0K2efiN3YM', authData)
+    .then(res => {
+      this.setState({error: false});
+      this.loginHandler(); 
+    }).catch(error => {
+      this.setState({loading: false, error: true});
+    });
+  }
+
+  formSubmitHandler = (event) => {
+    event.preventDefault();
+    if(this.state.error) {
+      this.signUpHandler();
+    } else {
+      this.loginHandler();
+    }
+  };
 
   render() {
     const authInputsArray = [];
@@ -61,10 +107,17 @@ class Auth extends Component {
 
     return (
       <div className={classes.Auth}>
+        {this.state.error ? <p style={{color: 'red'}}>Your account was not found. Do you want to Signup?</p>: null}
         {formInputs}
+        
       </div>
     );
   }
 }
 
-export default Auth;
+const mapDispatchToProps = dispatch => {
+  return {
+    saveToken: (token) => dispatch(saveTokenAction(token))
+  };
+}
+export default connect(null, mapDispatchToProps)(Auth);
