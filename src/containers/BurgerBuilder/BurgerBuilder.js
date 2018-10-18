@@ -36,6 +36,10 @@ class BurgerBuilder extends Component {
   }
 
   continueButtonHandler = () => {
+    if(!this.props.isAuthenticated) {
+      this.props.history.push('/auth', {referrer: '/checkout'});
+      return;
+    }
     this.props.history.push('/checkout');
   }
 
@@ -74,7 +78,8 @@ class BurgerBuilder extends Component {
 const mapStateToProps = (state) => {
   return {
     ingredients: state.burger.ingredients,
-    totalPrice: state.burger.totalPrice
+    totalPrice: state.burger.totalPrice,
+    isAuthenticated: state.auth.idToken !== null
   }; 
 };
 

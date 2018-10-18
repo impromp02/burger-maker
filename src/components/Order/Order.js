@@ -2,7 +2,6 @@ import React from 'react';
 import classes from './Order.css';
 
 const Order = ({ingredients, formData, totalPrice}) => {
-  console.log('order', formData)
   const ingredientsArr = [];
   for(let ingredient in ingredients) {
     ingredientsArr.push({

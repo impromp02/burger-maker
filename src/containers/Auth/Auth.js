@@ -53,10 +53,10 @@ class Auth extends Component {
     .then(res => {
       this.setState({loading: false});
       this.props.saveToken(res.data.idToken);
-      this.props.history.push('/');
+      this.props.history.push(this.props.location.state.referrer);
     }).catch(error => {
       this.setState({loading: false, error: true});
-      console.log('login fail', error.response.data.error.message);      
+      console.log('login fail', error);      
     });
   }
 
@@ -66,9 +66,11 @@ class Auth extends Component {
     const authData = this.authData();
     axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBQIRKY7hdRkUHLEbfpK2AAn0K2efiN3YM', authData)
     .then(res => {
-      this.setState({error: false});
-      this.loginHandler(); 
+      this.setState({loading: false, error: false});
+      this.props.saveToken(res.data.idToken);
+      this.props.history.push(this.props.location.state.referrer);
     }).catch(error => {
+      console.log('signup failed!!!!');
       this.setState({loading: false, error: true});
     });
   }

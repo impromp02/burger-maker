@@ -8,9 +8,10 @@ const getOrders = (orders) => {
   };
 }
 
-export const getOrdersAsync = () => {
+export const getOrdersAsync = (token) => {
   return dispatch => {
-    axios.get('orders.json')
+    
+    axios.get('orders.json?auth='+ token)
     .then(res => {
       const fetchedOrders = [];
       for(let key in res.data) {
@@ -20,6 +21,6 @@ export const getOrdersAsync = () => {
         });
       }
       dispatch(getOrders(fetchedOrders));
-    })
+    }).catch(error => console.log(error));
   }
 }

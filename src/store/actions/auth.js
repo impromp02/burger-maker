@@ -6,3 +6,9 @@ export const saveToken = (token) => {
     payload: token
   };
 };
+
+export const logout = () => {
+  return {
+    type: actionTypes.LOGOUT
+  };
+};

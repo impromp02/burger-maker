@@ -40,9 +40,9 @@ class ContactData extends Component {
     loading: false
   };
 
-  orderHandler = (event) => {
+  orderHandler = (event, token) => {
     event.preventDefault();
-    
+
     this.setState({loading: true});
     const formData = {};
     for (let key in this.state.orderForm) {
@@ -55,12 +55,15 @@ class ContactData extends Component {
       totalPrice: this.props.totalPrice
     };
 
-    axios.post('/orders.json', dataToSend)
+    axios.post('/orders.json?auth=' + token, dataToSend)
     .then(() => {
       this.setState({loading: false});
       this.props.history.push('/');
     })
-    .catch(err => this.setState({loading: false}));
+    .catch(error => {
+      this.setState({loading: false});
+      console.log(error.message);
+    });
   }
 
   inputChangeHandler = (event, inputFieldId) => {
@@ -84,7 +87,7 @@ class ContactData extends Component {
     if(this.state.loading) {
       formInputs = <Spinner/>;
     } else {
-      formInputs = <form onSubmit={this.orderHandler}>
+      formInputs = <form onSubmit={(event) => this.orderHandler(event, this.props.token)}>
         {formInputsArray.map(input => {
           return <Input change={(event) => this.inputChangeHandler(event, input.id)} key={input.id} attr={input} />
         })}
@@ -104,7 +107,9 @@ class ContactData extends Component {
 const mapStateToProps = state => {
   return {
     ingredients: state.burger.ingredients,
-    totalPrice: state.burger.totalPrice
+    totalPrice: state.burger.totalPrice,
+    token: state.auth.idToken,
+    isAuthenticated: state.auth.idToken !== null
   }
 }
 export default connect(mapStateToProps)(withError(ContactData, axios));

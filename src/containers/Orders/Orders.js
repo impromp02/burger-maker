@@ -7,17 +7,12 @@ import Spinner from '../../components/UI/Spinnner/Spinner';
 class Orders extends Component {
   constructor(props) {
     super(props);
-    this.props.getAllOrders();
+    if(this.props.idToken !== null) {
+      this.props.getAllOrders(this.props.idToken);
+    } else {
+      this.props.history.push("/auth", {referrer: this.props.history.location});
+    }
   } 
-  state = {
-    loading: true
-  };
-
-  componentDidMount() {
-    //this.props.getAllOrders();
-
-    this.setState({loading: false});
-  }
 
   render () {
     let order = null;
@@ -42,13 +37,14 @@ class Orders extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    orders: state.allOrders.orders
+    orders: state.allOrders.orders,
+    idToken: state.auth.idToken
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllOrders: () => dispatch(getOrdersAsync())
+    getAllOrders: (token) => dispatch(getOrdersAsync(token))
   };
 }
 
