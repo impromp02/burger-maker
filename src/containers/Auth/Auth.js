@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Spinner from '../../components/UI/Spinnner/Spinner';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
-import { saveToken as saveTokenAction } from '../../store/actions/index';
+import { checkAuthStatus } from '../../store/actions/index';
 import classes from './Auth.css';
 
 class Auth extends Component {
@@ -52,7 +52,15 @@ class Auth extends Component {
     axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyBQIRKY7hdRkUHLEbfpK2AAn0K2efiN3YM', authData)
     .then(res => {
       this.setState({loading: false});
-      this.props.saveToken(res.data.idToken);
+
+      // Save the credentials in localStorage
+      localStorage.setItem('token', res.data.idToken);
+      localStorage.setItem('expireTime', Date.now() + (res.data.expiresIn * 1000));
+      localStorage.setItem('userId', res.data.localId);
+      console.log('saved to localStorage');
+      this.props.checkAuthStatus();
+      //**********************************************
+      console.log(this.props.location.state);
       this.props.history.push(this.props.location.state.referrer);
     }).catch(error => {
       this.setState({loading: false, error: true});
@@ -119,7 +127,7 @@ class Auth extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveToken: (token) => dispatch(saveTokenAction(token))
+    checkAuthStatus: () => dispatch(checkAuthStatus())
   };
 }
 export default connect(null, mapDispatchToProps)(Auth);

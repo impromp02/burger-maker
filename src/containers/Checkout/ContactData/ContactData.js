@@ -109,7 +109,7 @@ const mapStateToProps = state => {
     ingredients: state.burger.ingredients,
     totalPrice: state.burger.totalPrice,
     token: state.auth.idToken,
-    isAuthenticated: state.auth.idToken !== null
+    isAuthenticated: state.auth.loggedIn
   }
 }
 export default connect(mapStateToProps)(withError(ContactData, axios));

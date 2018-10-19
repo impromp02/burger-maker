@@ -6,6 +6,9 @@ import { logout } from '../../../store/actions/index';
 class Logout extends Component {
   componentDidMount() {
     this.props.logout();
+    if(this.props.location.pathname !== "/") {
+      this.props.history.push("/");
+    }
   }
 
   render() {

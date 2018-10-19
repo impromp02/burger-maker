@@ -7,7 +7,9 @@ const NavigationItem = (props) => (
     <NavLink 
       activeClassName={classes.active} to={{
       pathname: props.link,
-      state: props.referrer
+      state: {
+        referrer: props.referrer
+      } 
   }} exact>{props.children}</NavLink>
   </li>
 );

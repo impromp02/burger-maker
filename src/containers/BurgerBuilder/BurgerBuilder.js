@@ -79,7 +79,7 @@ const mapStateToProps = (state) => {
   return {
     ingredients: state.burger.ingredients,
     totalPrice: state.burger.totalPrice,
-    isAuthenticated: state.auth.idToken !== null
+    isAuthenticated: state.auth.loggedIn
   }; 
 };
 
