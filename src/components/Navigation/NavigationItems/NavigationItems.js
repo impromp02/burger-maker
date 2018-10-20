@@ -12,7 +12,7 @@ class NavigationItems extends React.Component {
       items = (
         <Aux>
         <NavigationItem link="/">Burger Builder</NavigationItem>
-        <NavigationItem link='/auth' referrer="/">Auth</NavigationItem>
+        <NavigationItem link='/auth' referrer="/">Login</NavigationItem>
         </Aux>
       );
     } else {
