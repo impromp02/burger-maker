@@ -8,7 +8,8 @@ class Orders extends Component {
   constructor(props) {
     super(props);
     if(this.props.idToken !== null) {
-      this.props.getAllOrders(this.props.idToken);
+      const userId = localStorage.getItem('userId');
+      this.props.getAllOrders(this.props.idToken, userId);
     } else {
       this.props.history.push("/auth", {referrer: this.props.history.location});
     }
@@ -44,7 +45,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllOrders: (token) => dispatch(getOrdersAsync(token))
+    getAllOrders: (token, userId) => dispatch(getOrdersAsync(token, userId))
   };
 }
 

@@ -52,7 +52,8 @@ class ContactData extends Component {
     const dataToSend = {
       formData: {...formData},
       ingredients: this.props.ingredients,
-      totalPrice: this.props.totalPrice
+      totalPrice: this.props.totalPrice,
+      userId: localStorage.getItem('userId')
     };
 
     axios.post('/orders.json?auth=' + token, dataToSend)
