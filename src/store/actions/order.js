@@ -6,7 +6,7 @@ const getOrders = (orders) => {
     type: actionTypes.GET_ORDERS,
     payload: orders
   };
-}
+};
 
 export const getOrdersAsync = (token, userId) => {
   console.log('in action', userId);
@@ -25,4 +25,4 @@ export const getOrdersAsync = (token, userId) => {
       dispatch(getOrders(fetchedOrders));
     }).catch(error => console.log(error));
   }
-}
+};
